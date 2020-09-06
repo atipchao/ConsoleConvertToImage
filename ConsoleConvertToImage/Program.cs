@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -18,22 +19,6 @@ namespace ConsoleConvertToImage
                     <html>  
                         <head>  
                             <style>  
-                                table {  
-                                  font-family: arial, sans-serif;  
-                                  border-collapse: collapse;  
-                                  width: 100%;  
-                                }  
-                                  
-                                td, th {  
-                                  border: 1px solid #dddddd;  
-                                  text-align: left;  
-                                  padding: 8px;  
-                                }  
-                                  
-                                tr:nth-child(even) {  
-                                  background-color: #dddddd;  
-                                }  
-
                                 p.uspsBarCode {font-family: USPSIMBCompact; font-size:14pt}
                           </style>  
                          </head>  
@@ -44,7 +29,8 @@ namespace ConsoleConvertToImage
                      </body>  
                     </html> ";
             StartBrowser(source);
-            Console.ReadLine();
+            //Console.ReadLine();
+            return ;
         }
         private static void StartBrowser(string source)
         {
@@ -76,10 +62,11 @@ namespace ConsoleConvertToImage
                     bitmap,
                     new System.Drawing
                         .Rectangle(0, 0, 290, 45));
-                bitmap.Save(@"filename.jpg",
+                bitmap.Save(@"IMB.jpg",
                     System.Drawing.Imaging.ImageFormat.Jpeg);
             }
-
+            // Kill the thread - we done with the barcode
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
     }
 }
